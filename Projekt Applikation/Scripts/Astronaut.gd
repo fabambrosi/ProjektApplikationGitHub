@@ -2,29 +2,30 @@ extends KinematicBody2D
 
 var screen_size
 
-var gravity = 2 #Abhängig vom Planet 
+var gravity = 200  #Abhängig vom Planet 
 
-export var jump_force = 1 #Kann auch geändert werden, je nach Austronautentyp (Mensch, 930 N,  Känguru, ....)
+export var jump_force = 150 #Kann auch geändert werden, je nach Austronautentyp (Mensch, 930 N,  Känguru, ....)
 export var mass = 75 #Kann im UI eingestellt werden
 
-export var speed = 100
 
+var velocity = Vector2()
+const Up_Vector = Vector2(0, -1)
 
 func _ready():
 	screen_size = get_viewport_rect().size
 	
 func _process(delta):
-	var velocity = Vector2.ZERO
+	velocity.x = 0
+	velocity.y += gravity * delta
+	
+	check_key_input()
+
+	
+	move_and_slide(velocity, Up_Vector)
+	#position += velocity * delta
+	#position.x = clamp(position.x, 0, screen_size.x)
+	#position.y = clamp(position.y, 0, screen_size.y)
+
+func check_key_input():
 	if Input.is_action_just_pressed("jump"):
-		velocity.y -= 1  #oder Formel für die Gravitation 
-		velocity.y += gravity
-		
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		$AnimatedSprite.play()
-	#else:
-		#$AnimatedSprite.stop()
-		
-	position += velocity * delta
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
+		velocity.y = -jump_force  #oder Formel für die Gravitation 
