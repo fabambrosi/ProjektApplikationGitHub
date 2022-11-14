@@ -2,9 +2,10 @@ extends KinematicBody2D
 
 var screen_size
 
-var gravity = 200  #Abhängig vom Planet 
+var gravity = 9.81 #Erde,Abhängig vom Planet 
 
-export var jump_force = 150 #Kann auch geändert werden, je nach Austronautentyp (Mensch, 930 N,  Känguru, ....)
+
+export var jump_force = 20 #Kann auch geändert werden, je nach Austronautentyp (Mensch, 930 N,  Känguru, ....)
 export var mass = 75 #Kann im UI eingestellt werden
 
 
@@ -27,5 +28,5 @@ func _process(delta):
 	#position.y = clamp(position.y, 0, screen_size.y)
 
 func check_key_input():
-	if Input.is_action_just_pressed("jump"):
-		velocity.y = -jump_force  #oder Formel für die Gravitation 
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = -jump_force  
