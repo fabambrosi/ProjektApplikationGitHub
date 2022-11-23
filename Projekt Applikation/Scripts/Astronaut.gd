@@ -22,6 +22,7 @@ func _process(delta):
 	
 	gravity = get_parent().get_node("Planet").planet_gravity
 	velocity.x = 0
+	print(gravity)
 	velocity.y += gravity * delta * motion_factor
 	check_key_input()
 
