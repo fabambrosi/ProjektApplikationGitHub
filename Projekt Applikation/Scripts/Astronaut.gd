@@ -2,11 +2,8 @@ extends KinematicBody2D
 
 var screen_size
 
-export(String,"Merkur", "Venus", "Erde", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto", "Mond") var planet = "Jupiter"
-var faktor_fallbeschleunigung_liste = {"Merkur":0.377,"Venus":0.904,"Erde":1,"Mars":0.396,"Jupiter":2.545,"Saturn":1.064,"Uranus":0.904,"Neptun":1.136,"Pluto":0.067,"Mond":0.166}
-
-var gravity = 300 #Erde,Abhängig vom Planet 
-
+var gravity = 0 #Erde,Abhängig vom Planet 
+var motion_factor = 30
 
 export var jump_force = 160 #Kann auch geändert werden, je nach Austronautentyp (Mensch, 930 N,  Känguru, ....)
 export var mass = 75 #Kann im UI eingestellt werden
@@ -20,13 +17,12 @@ var z = 0
 func _ready():
 	
 	screen_size = get_viewport_rect().size
-	z = float(faktor_fallbeschleunigung_liste[planet])
-	print(z)
 
 func _process(delta):
 	
+	gravity = get_parent().get_node("Planet").planet_gravity
 	velocity.x = 0
-	velocity.y += gravity * delta * z
+	velocity.y += gravity * delta * motion_factor
 	check_key_input()
 
 	
