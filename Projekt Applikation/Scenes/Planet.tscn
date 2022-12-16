@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Planet.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -23,18 +23,25 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 182.922, 22 )
+extents = Vector2( 177.461, 22 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 246.5, 21 )
 
 [node name="Planet" type="StaticBody2D"]
 position = Vector2( 476, 266 )
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 43, 27 )
+position = Vector2( 45, 24 )
 scale = Vector2( 0.993164, 0.59082 )
 frames = SubResource( 1 )
 animation = "New Anim 1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -291.922, 113 )
+position = Vector2( -293.461, 113 )
 shape = SubResource( 2 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( 304.5, 114 )
+shape = SubResource( 3 )
