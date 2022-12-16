@@ -115,3 +115,5 @@ margin_right = 133.0
 margin_bottom = 186.0
 size_flags_stretch_ratio = 0.0
 text = "Kreatur"
+
+[connection signal="item_selected" from="PanelContainer/HBoxContainer/PlanetVBox/OptionButton" to="." method="_on_OptionButton_item_selected"]
