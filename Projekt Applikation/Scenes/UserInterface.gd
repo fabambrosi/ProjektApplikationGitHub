@@ -13,6 +13,7 @@ var current_planet = "Erde"
 func _ready():
 	for i in planet_list:
 		planet_selector.add_item(i)
+	planet_selector.selected = 3
 	update_planet()
 
 func _physics_process(_delta):

@@ -1,43 +1,71 @@
 extends KinematicBody2D
 
+onready var animation = get_node("AnimatedSprite")
+
 var screen_size
 
-var gravity = 0 #Erde,Abhängig vom Planet 
-var motion_factor = 30
+var gravity = 1.0 #Abhängig vom Planet
+var gravity_factor = 1.0
+var motion = Vector2.ZERO
 
-export var jump_force = 160 #Kann auch geändert werden, je nach Austronautentyp (Mensch, 930 N,  Känguru, ....)
+
 export var mass = 75 #Kann im UI eingestellt werden
+export var jump_force = 30
+export var speed = 50
+
+var pixel_per_meter = 10.0
+var updates_per_second = 60.0
 
 var velocity = Vector2()
 const Up_Vector = Vector2(0, -1)
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	gravity_factor = pixel_per_meter/updates_per_second 
+	print(gravity_factor)
+	# -> (10/m)/(60/s)=10s/60m
+	# Multipliziert mit Graviation z.B. 9.81 m/s^2 * 1/6 s/m = 1.635/s
 
-func _process(delta):
+func _physics_process(_delta):
 	gravity = get_parent().get_node("Planet").planet_gravity
-	velocity.x = 0
-	velocity.y += gravity * delta * motion_factor
+	if !is_on_floor():
+		velocity.y += gravity * gravity_factor
 	check_key_input()
-	move()
 	reset_position()
+	animate_player()
+	move()
 
-	velocity = move_and_slide(velocity, Up_Vector)
+func move():
+#	velocity = move_and_slide(velocity, Up_Vector)
+	motion = move_and_slide(velocity,Up_Vector)
+	if is_on_floor():
+		velocity.y = 0.01
+	
 
 func check_key_input():
 	if Input.is_action_just_pressed("w") and is_on_floor():
-		velocity.y = -jump_force  
+		velocity.y = -jump_force
+	velocity.x = (int(Input.is_action_pressed("d"))- int(Input.is_action_pressed("a")))*speed
 
-func move():
-	if Input.is_action_pressed("a"):
-		position.x = position.x -1
-	if Input.is_action_pressed("d"):
-		position.x = position.x +1
 
 func reset_position():
 	if position.y > screen_size.y:
-		position.y = -10
-	if position.x < -10:
-		position.x = screen_size.x + 8
-	if position.x > screen_size.x + 10:
-		position.x = - 8
+		position.y = -8
+	if position.x < -6:
+		position.x = screen_size.x + 5
+	if position.x > screen_size.x + 6:
+		position.x = - 5
+
+func animate_player():
+	if !is_on_floor():
+		animation.animation = "Jump"
+	else:
+		if motion.x != 0:
+			animation.animation = "Walk"
+		else:
+			animation.animation = "Idle"
+
+	if velocity.x < 0:
+		animation.scale.x = -1
+	elif velocity.x > 0:
+		animation.scale.x = 1
