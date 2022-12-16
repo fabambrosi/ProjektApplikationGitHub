@@ -35,5 +35,5 @@ func _process(delta):
 	
 
 func check_key_input():
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("w") and is_on_floor():
 		velocity.y = -jump_force  
