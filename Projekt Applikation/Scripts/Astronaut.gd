@@ -10,7 +10,7 @@ var motion = Vector2.ZERO
 
 
 export var mass = 75 #Kann im UI eingestellt werden
-export var jump_force = 30
+export var jump_force = 32.5
 export var speed = 50
 
 var pixel_per_meter = 10.0
@@ -44,8 +44,8 @@ func move():
 
 func check_key_input():
 	if Input.is_action_just_pressed("w") and is_on_floor():
-		velocity.y = -jump_force
-	velocity.x = (int(Input.is_action_pressed("d"))- int(Input.is_action_pressed("a")))*speed
+		velocity.y = -jump_force*(1+(int(Input.is_action_pressed("Shift")))*1.5)
+	velocity.x = (int(Input.is_action_pressed("d"))- int(Input.is_action_pressed("a")))*speed*(1+(int(Input.is_action_pressed("Shift")))*0.5)
 
 
 func reset_position():
@@ -69,3 +69,7 @@ func animate_player():
 		animation.scale.x = -1
 	elif velocity.x > 0:
 		animation.scale.x = 1
+	if Input.is_action_pressed("Shift"):
+		modulate = Color(1,0.75,0.75)
+	else:
+		modulate = Color(1,1,1)

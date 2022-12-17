@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/Planet.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Art/Planets.png" type="Texture" id=2]
@@ -112,7 +112,7 @@ extents = Vector2( 4.5, 47.5 )
 extents = Vector2( 27, 6.5 )
 
 [sub_resource type="RectangleShape2D" id=22]
-extents = Vector2( 20, 19.5 )
+extents = Vector2( 20, 17 )
 
 [sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 13, 33 )
@@ -120,6 +120,10 @@ extents = Vector2( 13, 33 )
 [sub_resource type="CapsuleShape2D" id=19]
 radius = 7.0
 height = 34.0
+
+[sub_resource type="CapsuleShape2D" id=24]
+radius = 6.0
+height = 28.0
 
 [node name="Planet" type="StaticBody2D"]
 script = ExtResource( 1 )
@@ -142,7 +146,7 @@ position = Vector2( 172, 128.5 )
 shape = SubResource( 21 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
-position = Vector2( 214, 111.5 )
+position = Vector2( 214, 114 )
 shape = SubResource( 22 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
@@ -160,3 +164,8 @@ polygon = PoolVector2Array( 152, 180, 149, 157, 146, 135, 204, 135, 205, 100, 22
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 79, 136, 76, 168, 76, 174, 74, 180, 74, 192, -16, 192, -16, 136 )
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="."]
+position = Vector2( 214, 98 )
+rotation = 1.5708
+shape = SubResource( 24 )
